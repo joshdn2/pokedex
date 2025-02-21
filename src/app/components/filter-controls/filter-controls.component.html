@@ -1,0 +1,56 @@
+<div class="filter-controls">
+  <div class="search-bar">
+    <mat-form-field>
+      <mat-label>Search Pokémon</mat-label>
+      <input matInput
+             [(ngModel)]="searchTerm"
+             (ngModelChange)="onFilterChange()"
+             placeholder="Enter Pokémon name">
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <div class="filter-options">
+    <mat-form-field>
+      <mat-label>Type</mat-label>
+      <mat-select [(ngModel)]="selectedTypes"
+                  (ngModelChange)="onFilterChange()"
+                  multiple>
+        <mat-option *ngFor="let type of TYPES" [value]="type">
+          {{type | titlecase}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Generation</mat-label>
+      <mat-select [(ngModel)]="selectedGeneration"
+                  (ngModelChange)="onFilterChange()">
+        <mat-option [value]="null">All</mat-option>
+        <mat-option *ngFor="let gen of GENERATIONS" [value]="gen.value">
+          {{gen.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Sort By</mat-label>
+      <mat-select [(ngModel)]="sortBy"
+                  (ngModelChange)="onFilterChange()">
+        <mat-option *ngFor="let option of SORT_OPTIONS" [value]="option.value">
+          {{option.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="filter-actions">
+    <button mat-raised-button
+            color="primary"
+            [class.visible]="hasActiveFilters"
+            (click)="clearFilters()">
+      <mat-icon>clear</mat-icon>
+      Clear Filters
+    </button>
+  </div>
+</div> 

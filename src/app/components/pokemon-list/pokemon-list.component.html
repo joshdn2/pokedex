@@ -1,20 +1,37 @@
-<div class="pokemon-list">
-  <div *ngFor="let generation of pokemonByGen" class="generation-section">
-    <div class="generation-header">
-      <h2>{{generation.name}}</h2>
+<div class="pokemon-list-container">
+  <header class="pokedex-header">
+    <h1>Pokédex</h1>
+  </header>
+
+  <div class="controls-section">
+    <app-filter-controls
+      (filterChange)="handleFilterChange($event)">
+    </app-filter-controls>
+  </div>
+
+  <div class="pokemon-list">
+    <div *ngFor="let generation of pokemonByGen" class="generation-section">
+      <div class="generation-header">
+        <h2>{{generation.name}}</h2>
+      </div>
+      <div class="pokemon-grid">
+        <app-pokemon-card 
+          *ngFor="let pokemon of generation.pokemon" 
+          [pokemon]="pokemon">
+        </app-pokemon-card>
+      </div>
     </div>
-    <div class="pokemon-grid">
-      <app-pokemon-card 
-        *ngFor="let pokemon of generation.pokemon" 
-        [pokemon]="pokemon">
-      </app-pokemon-card>
-    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    Loading Pokémon...
+  </div>
+  <div *ngIf="!loading && filteredPokemon.length === 0" class="loading">
+    No Pokémon found matching your filters.
+  </div>
+  <div *ngIf="!loading && displayOffset >= filteredPokemon.length" class="loading">
+    All Pokémon loaded!
   </div>
 </div>
 
-<div *ngIf="loading" class="loading">
-  Loading more Pokémon...
-</div>
-<div *ngIf="allLoaded && !loading" class="loading">
-  All Pokémon loaded!
-</div> 
+<app-back-to-top></app-back-to-top> 

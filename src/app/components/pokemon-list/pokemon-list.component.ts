@@ -2,21 +2,37 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PokemonService } from '../../services/pokemon.service';
 import { PokemonCardComponent } from '../pokemon-card/pokemon-card.component';
+import { FilterControlsComponent } from '../filter-controls/filter-controls.component';
 import { PokemonBasicData, PokemonGeneration } from '../../services/interfaces/pokemon.interfaces';
+import { FilterState } from '../../services/interfaces/filter.interfaces';
+import { BackToTopComponent } from '../back-to-top/back-to-top.component';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-pokemon-list',
   standalone: true,
-  imports: [CommonModule, PokemonCardComponent],
+  imports: [
+    CommonModule,
+    PokemonCardComponent,
+    FilterControlsComponent,
+    BackToTopComponent
+  ],
   templateUrl: './pokemon-list.component.html',
   styleUrls: ['./pokemon-list.component.css']
 })
 export class PokemonListComponent implements OnInit {
   pokemonByGen: PokemonGeneration[] = [];
-  loading = false;
-  offset = 0;
-  limit = 100;
-  allLoaded = false;
+  filteredPokemon: PokemonBasicData[] = [];
+  displayedPokemon: PokemonBasicData[] = [];
+  loading = true;
+  displayLimit = 100;
+  displayOffset = 0;
+  currentFilters: FilterState = {
+    searchTerm: '',
+    selectedTypes: [],
+    selectedGeneration: null,
+    sortBy: 'number'
+  };
 
   readonly GENERATIONS = [
     { number: 1, name: 'Generation I - Kanto', startId: 1, endId: 151 },
@@ -33,21 +49,99 @@ export class PokemonListComponent implements OnInit {
   constructor(private pokemonService: PokemonService) {}
 
   ngOnInit() {
-    this.loadPokemon();
+    this.pokemonService.getLoadingStatus().subscribe(
+      isLoading => this.loading = isLoading
+    );
+
+    this.pokemonService.getAllPokemon().subscribe(pokemon => {
+      if (pokemon.length > 0) {
+        this.applyFilters(pokemon);
+        this.updateDisplayedPokemon();
+      }
+    });
   }
 
   @HostListener('window:scroll', ['$event'])
   onScroll() {
-    if (this.loading || this.allLoaded) return;
+    if (this.loading) return;
 
-    // Calculate current scroll position and total height
     const scrollPosition = window.scrollY;
     const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
     
-    // Load more when we're halfway through (50% of total scroll height)
     if (scrollPosition > totalHeight * 0.5) {
-      this.loadPokemon();
+      this.loadMorePokemon();
     }
+  }
+
+  private loadMorePokemon() {
+    const nextBatch = this.filteredPokemon.slice(
+      this.displayOffset,
+      this.displayOffset + this.displayLimit
+    );
+    
+    if (nextBatch.length > 0) {
+      this.displayOffset += this.displayLimit;
+      this.groupByGeneration(nextBatch);
+    }
+  }
+
+  handleFilterChange(filters: FilterState) {
+    this.currentFilters = filters;
+    this.pokemonService.getAllPokemon().pipe(take(1)).subscribe(pokemon => {
+      this.applyFilters(pokemon);
+      this.resetDisplay();
+    });
+  }
+
+  private resetDisplay() {
+    this.displayOffset = 0;
+    this.pokemonByGen = [];
+    this.updateDisplayedPokemon();
+  }
+
+  private updateDisplayedPokemon() {
+    const initialBatch = this.filteredPokemon.slice(0, this.displayLimit);
+    this.displayOffset = this.displayLimit;
+    this.groupByGeneration(initialBatch);
+  }
+
+  private applyFilters(pokemon: PokemonBasicData[]) {
+    let filtered = [...pokemon];
+
+    if (this.currentFilters.searchTerm) {
+      const searchTerm = this.currentFilters.searchTerm.toLowerCase();
+      filtered = filtered.filter(pokemon => 
+        pokemon.name.toLowerCase().includes(searchTerm)
+      );
+    }
+
+    if (this.currentFilters.selectedTypes.length > 0) {
+      filtered = filtered.filter(pokemon =>
+        this.currentFilters.selectedTypes.every(type =>
+          pokemon.types.includes(type)
+        )
+      );
+    }
+
+    if (this.currentFilters.selectedGeneration) {
+      const gen = this.GENERATIONS.find(g => 
+        g.number === this.currentFilters.selectedGeneration
+      );
+      if (gen) {
+        filtered = filtered.filter(pokemon =>
+          pokemon.id >= gen.startId && pokemon.id <= gen.endId
+        );
+      }
+    }
+
+    filtered.sort((a, b) => {
+      if (this.currentFilters.sortBy === 'name') {
+        return a.name.localeCompare(b.name);
+      }
+      return a.id - b.id;
+    });
+
+    this.filteredPokemon = filtered;
   }
 
   private groupByGeneration(pokemon: PokemonBasicData[]): void {
@@ -69,26 +163,6 @@ export class PokemonListComponent implements OnInit {
           this.pokemonByGen.sort((a, b) => a.number - b.number);
         }
         genGroup.pokemon.push(poke);
-      }
-    });
-  }
-
-  loadPokemon() {
-    if (this.loading || this.allLoaded) return;
-
-    this.loading = true;
-    this.pokemonService.getPokemonPage(this.offset, this.limit).subscribe({
-      next: (newPokemon) => {
-        if (newPokemon.length < this.limit) {
-          this.allLoaded = true;
-        }
-        this.groupByGeneration(newPokemon);
-        this.offset += this.limit;
-        this.loading = false;
-      },
-      error: (error) => {
-        console.error('Error loading Pokemon:', error);
-        this.loading = false;
       }
     });
   }

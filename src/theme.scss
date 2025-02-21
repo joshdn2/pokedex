@@ -1,0 +1,149 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$pokedex-primary: mat.define-palette(mat.$indigo-palette);
+$pokedex-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$pokedex-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$pokedex-theme: mat.define-light-theme((
+  color: (
+    primary: $pokedex-primary,
+    accent: $pokedex-accent,
+    warn: $pokedex-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($pokedex-theme);
+
+@use '@angular/material' as mat;
+
+// Define our Pokédex color palette
+$pokedex-red: (
+  50: #ffebee,
+  100: #ffcdd2,
+  200: #ef9a9a,
+  300: #e57373,
+  400: #ef5350,
+  500: #ee1515, // Pokemon Red
+  600: #e53935,
+  700: #d32f2f,
+  800: #c62828,
+  900: #b71c1c,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+);
+
+$pokedex-blue: (
+  50: #e3f2fd,
+  100: #bbdefb,
+  200: #90caf9,
+  300: #64b5f6,
+  400: #42a5f5,
+  500: #3B4CCA, // Pokemon Blue
+  600: #1e88e5,
+  700: #1976d2,
+  800: #1565c0,
+  900: #0d47a1,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+);
+
+// Create the palettes
+$pokedex-primary: mat.define-palette($pokedex-red);
+$pokedex-accent: mat.define-palette($pokedex-blue);
+$pokedex-warn: mat.define-palette(mat.$yellow-palette);
+
+// Create the theme
+$pokedex-theme: mat.define-light-theme((
+  color: (
+    primary: $pokedex-primary,
+    accent: $pokedex-accent,
+    warn: $pokedex-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+// Apply the theme
+@include mat.all-component-themes($pokedex-theme);
+
+// Custom styles for Material components
+.mat-mdc-form-field {
+  .mat-mdc-form-field-flex {
+    background-color: white;
+  }
+}
+
+.mat-mdc-form-field-appearance-outline {
+  .mat-mdc-form-field-outline {
+    background-color: white;
+  }
+}
+
+// Custom styles for our filter controls
+.filter-controls {
+  .mat-mdc-form-field {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .mat-mdc-select-value {
+    color: rgba(0, 0, 0, 0.87);
+  }
+
+  .mat-mdc-select-arrow {
+    color: rgba(0, 0, 0, 0.54);
+  }
+
+  .mat-mdc-form-field-label {
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+// Custom styles for the chips
+.mat-mdc-chip {
+  &.type-chip {
+    border-radius: 16px;
+    font-weight: 500;
+  }
+} 

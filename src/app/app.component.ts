@@ -6,9 +6,7 @@ import { PokemonListComponent } from './components/pokemon-list/pokemon-list.com
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, PokemonListComponent],
-  template: `
-    <h1>Pokédex</h1>
-    <app-pokemon-list></app-pokemon-list>
-  `
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {}
