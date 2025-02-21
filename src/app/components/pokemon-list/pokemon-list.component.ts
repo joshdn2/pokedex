@@ -3,17 +3,17 @@ import { CommonModule } from '@angular/common';
 import { PokemonService } from '../../services/pokemon.service';
 import { PokemonCardComponent } from '../pokemon-card/pokemon-card.component';
 import { FilterControlsComponent } from '../filter-controls/filter-controls.component';
+import { BackToTopComponent } from '../back-to-top/back-to-top.component';
 import { PokemonBasicData, PokemonGeneration } from '../../services/interfaces/pokemon.interfaces';
 import { FilterState } from '../../services/interfaces/filter.interfaces';
-import { BackToTopComponent } from '../back-to-top/back-to-top.component';
 import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-pokemon-list',
   standalone: true,
   imports: [
-    CommonModule,
-    PokemonCardComponent,
+    CommonModule, 
+    PokemonCardComponent, 
     FilterControlsComponent,
     BackToTopComponent
   ],
@@ -124,14 +124,9 @@ export class PokemonListComponent implements OnInit {
     }
 
     if (this.currentFilters.selectedGeneration) {
-      const gen = this.GENERATIONS.find(g => 
-        g.number === this.currentFilters.selectedGeneration
+      filtered = filtered.filter(pokemon =>
+        pokemon.generation === this.currentFilters.selectedGeneration
       );
-      if (gen) {
-        filtered = filtered.filter(pokemon =>
-          pokemon.id >= gen.startId && pokemon.id <= gen.endId
-        );
-      }
     }
 
     filtered.sort((a, b) => {
