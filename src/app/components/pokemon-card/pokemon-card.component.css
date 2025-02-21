@@ -1,0 +1,42 @@
+.pokemon-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.pokemon-card:hover {
+  transform: translateY(-2px);
+}
+
+.pokemon-number {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.pokemon-image {
+  width: 120px;
+  height: 120px;
+  margin: 1rem 0;
+}
+
+.pokemon-name {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.type-container {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.type-pill {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  color: white;
+  text-transform: capitalize;
+} 

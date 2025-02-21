@@ -1,0 +1,20 @@
+<div class="pokemon-list">
+  <div *ngFor="let generation of pokemonByGen" class="generation-section">
+    <div class="generation-header">
+      <h2>{{generation.name}}</h2>
+    </div>
+    <div class="pokemon-grid">
+      <app-pokemon-card 
+        *ngFor="let pokemon of generation.pokemon" 
+        [pokemon]="pokemon">
+      </app-pokemon-card>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="loading" class="loading">
+  Loading more Pokémon...
+</div>
+<div *ngIf="allLoaded && !loading" class="loading">
+  All Pokémon loaded!
+</div> 
