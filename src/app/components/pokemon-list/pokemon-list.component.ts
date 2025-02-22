@@ -33,6 +33,7 @@ export class PokemonListComponent implements OnInit {
     selectedGeneration: null,
     sortBy: 'number'
   };
+  isFullDataLoaded = false;
 
   readonly GENERATIONS = [
     { number: 1, name: 'Generation I - Kanto', startId: 1, endId: 151 },
@@ -53,10 +54,26 @@ export class PokemonListComponent implements OnInit {
       isLoading => this.loading = isLoading
     );
 
-    this.pokemonService.getAllPokemon().subscribe(pokemon => {
-      if (pokemon.length > 0) {
-        this.applyFilters(pokemon);
-        this.updateDisplayedPokemon();
+    // Load initial batch quickly
+    this.pokemonService.getInitialBatch().subscribe(pokemon => {
+      this.applyFilters(pokemon);
+      this.updateDisplayedPokemon();
+      
+      // Start loading full dataset in background
+      this.pokemonService.loadFullDataset();
+    });
+
+    // Listen for full dataset load completion
+    this.pokemonService.isFullDatasetLoaded().subscribe(isLoaded => {
+      this.isFullDataLoaded = isLoaded;
+      if (isLoaded) {
+        // If we have active filters, reapply them with full dataset
+        if (this.hasActiveFilters()) {
+          this.pokemonService.getAllPokemon().pipe(take(1)).subscribe(pokemon => {
+            this.applyFilters(pokemon);
+            this.resetDisplay();
+          });
+        }
       }
     });
   }
@@ -160,5 +177,14 @@ export class PokemonListComponent implements OnInit {
         genGroup.pokemon.push(poke);
       }
     });
+  }
+
+  private hasActiveFilters(): boolean {
+    return !!(
+      this.currentFilters.searchTerm ||
+      this.currentFilters.selectedTypes.length ||
+      this.currentFilters.selectedGeneration ||
+      this.currentFilters.sortBy !== 'number'
+    );
   }
 } 
