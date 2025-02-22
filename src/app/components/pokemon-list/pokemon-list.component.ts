@@ -50,30 +50,34 @@ export class PokemonListComponent implements OnInit {
   constructor(private pokemonService: PokemonService) {}
 
   ngOnInit() {
-    this.pokemonService.getLoadingStatus().subscribe(
-      isLoading => this.loading = isLoading
-    );
-
-    // Load initial batch quickly
-    this.pokemonService.getInitialBatch().subscribe(pokemon => {
-      this.applyFilters(pokemon);
-      this.updateDisplayedPokemon();
-      
-      // Start loading full dataset in background
-      this.pokemonService.loadFullDataset();
-    });
-
-    // Listen for full dataset load completion
-    this.pokemonService.isFullDatasetLoaded().subscribe(isLoaded => {
-      this.isFullDataLoaded = isLoaded;
-      if (isLoaded) {
-        // If we have active filters, reapply them with full dataset
-        if (this.hasActiveFilters()) {
-          this.pokemonService.getAllPokemon().pipe(take(1)).subscribe(pokemon => {
-            this.applyFilters(pokemon);
-            this.resetDisplay();
-          });
-        }
+    console.log('Starting to load Pokemon');
+    this.loading = true;
+    
+    this.pokemonService.getAllPokemon().subscribe({
+      next: (pokemon) => {
+        console.log('Received pokemon:', pokemon.length);
+        this.filteredPokemon = pokemon;
+        
+        // Display first batch
+        const initialBatch = pokemon.slice(0, this.displayLimit);
+        console.log('Initial batch:', initialBatch.length);
+        
+        this.pokemonByGen = [];  // Clear existing groups
+        this.groupByGeneration(initialBatch);
+        console.log('Pokemon by gen:', {
+          genCount: this.pokemonByGen.length,
+          gens: this.pokemonByGen.map(g => ({
+            number: g.number,
+            pokemonCount: g.pokemon.length
+          }))
+        });
+        
+        this.displayOffset = this.displayLimit;
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error loading pokemon:', error);
+        this.loading = false;
       }
     });
   }
@@ -83,22 +87,35 @@ export class PokemonListComponent implements OnInit {
     if (this.loading) return;
 
     const scrollPosition = window.scrollY;
-    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-    
-    if (scrollPosition > totalHeight * 0.5) {
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    const scrollPercentage = (scrollPosition + windowHeight) / documentHeight;
+
+    if (scrollPercentage > 0.8) {
       this.loadMorePokemon();
     }
   }
 
   private loadMorePokemon() {
+    if (this.displayOffset >= this.filteredPokemon.length) {
+      console.log('All Pokemon loaded');
+      return;
+    }
+
+    console.log('Loading more Pokemon:', {
+      currentOffset: this.displayOffset,
+      totalFiltered: this.filteredPokemon.length
+    });
+
     const nextBatch = this.filteredPokemon.slice(
       this.displayOffset,
       this.displayOffset + this.displayLimit
     );
     
     if (nextBatch.length > 0) {
-      this.displayOffset += this.displayLimit;
       this.groupByGeneration(nextBatch);
+      this.displayOffset += this.displayLimit;
+      console.log('New batch loaded, new offset:', this.displayOffset);
     }
   }
 
@@ -171,7 +188,6 @@ export class PokemonListComponent implements OnInit {
             pokemon: []
           };
           this.pokemonByGen.push(genGroup);
-          // Sort generations by number
           this.pokemonByGen.sort((a, b) => a.number - b.number);
         }
         genGroup.pokemon.push(poke);

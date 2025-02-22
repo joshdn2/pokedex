@@ -10,26 +10,24 @@
   </div>
 
   <div class="pokemon-list">
-    <div *ngFor="let generation of pokemonByGen" class="generation-section">
-      <div class="generation-header">
-        <h2>{{generation.name}}</h2>
-      </div>
+    <ng-container *ngFor="let gen of pokemonByGen">
+      <h2 class="generation-header">{{gen.name}}</h2>
       <div class="pokemon-grid">
         <app-pokemon-card 
-          *ngFor="let pokemon of generation.pokemon" 
+          *ngFor="let pokemon of gen.pokemon"
           [pokemon]="pokemon">
         </app-pokemon-card>
       </div>
-    </div>
+    </ng-container>
   </div>
 
   <div *ngIf="loading" class="loading">
     Loading Pokémon...
   </div>
-  <div *ngIf="!loading && filteredPokemon.length === 0" class="loading">
+  <div *ngIf="!loading && !pokemonByGen.length && filteredPokemon.length > 0" class="loading">
     No Pokémon found matching your filters.
   </div>
-  <div *ngIf="!loading && displayOffset >= filteredPokemon.length" class="loading">
+  <div *ngIf="!loading && pokemonByGen.length > 0 && displayOffset >= filteredPokemon.length" class="loading">
     Gotta Catch 'Em All!
   </div>
 </div>
