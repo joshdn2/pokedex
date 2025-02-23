@@ -50,27 +50,17 @@ export class PokemonListComponent implements OnInit {
   constructor(private pokemonService: PokemonService) {}
 
   ngOnInit() {
-    console.log('Starting to load Pokemon');
     this.loading = true;
     
     this.pokemonService.getAllPokemon().subscribe({
       next: (pokemon) => {
-        console.log('Received pokemon:', pokemon.length);
         this.filteredPokemon = pokemon;
         
         // Display first batch
         const initialBatch = pokemon.slice(0, this.displayLimit);
-        console.log('Initial batch:', initialBatch.length);
         
         this.pokemonByGen = [];  // Clear existing groups
         this.groupByGeneration(initialBatch);
-        console.log('Pokemon by gen:', {
-          genCount: this.pokemonByGen.length,
-          gens: this.pokemonByGen.map(g => ({
-            number: g.number,
-            pokemonCount: g.pokemon.length
-          }))
-        });
         
         this.displayOffset = this.displayLimit;
         this.loading = false;
@@ -97,15 +87,7 @@ export class PokemonListComponent implements OnInit {
   }
 
   private loadMorePokemon() {
-    if (this.displayOffset >= this.filteredPokemon.length) {
-      console.log('All Pokemon loaded');
-      return;
-    }
-
-    console.log('Loading more Pokemon:', {
-      currentOffset: this.displayOffset,
-      totalFiltered: this.filteredPokemon.length
-    });
+    if (this.displayOffset >= this.filteredPokemon.length) {return;}
 
     const nextBatch = this.filteredPokemon.slice(
       this.displayOffset,
@@ -115,7 +97,6 @@ export class PokemonListComponent implements OnInit {
     if (nextBatch.length > 0) {
       this.groupByGeneration(nextBatch);
       this.displayOffset += this.displayLimit;
-      console.log('New batch loaded, new offset:', this.displayOffset);
     }
   }
 

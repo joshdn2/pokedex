@@ -22,7 +22,7 @@
   </div>
 
   <div *ngIf="loading" class="loading">
-    Loading Pokémon...
+    <img src="assets/pokeball-loading.gif" alt="Loading..." class="loading-spinner">
   </div>
   <div *ngIf="!loading && !pokemonByGen.length && filteredPokemon.length > 0" class="loading">
     No Pokémon found matching your filters.
