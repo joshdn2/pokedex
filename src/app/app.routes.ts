@@ -4,6 +4,6 @@ import { PokemonDetailComponent } from './components/pokemon-detail/pokemon-deta
 
 export const routes: Routes = [
   { path: '', component: PokemonListComponent },
-  { path: 'pokemon/:id', component: PokemonDetailComponent },
-  { path: '**', redirectTo: '' }  // Wildcard route for 404 handling
+  { path: 'pokemon/:name', component: PokemonDetailComponent },
+  { path: '**', redirectTo: '' }
 ];

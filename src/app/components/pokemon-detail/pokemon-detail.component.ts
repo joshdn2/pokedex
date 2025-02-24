@@ -29,14 +29,14 @@ export class PokemonDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      const id = Number(params['id']);
-      this.loadPokemon(id);
+      const name = params['name'];
+      this.loadPokemon(name);
     });
   }
 
-  private loadPokemon(id: number) {
+  private loadPokemon(name: string) {
     this.loading = true;
-    this.pokemonService.getPokemonById(id).subscribe({
+    this.pokemonService.getPokemonByName(name).subscribe({
       next: (pokemon) => {
         this.pokemon = pokemon;
         this.pokemonService.getAdjacentPokemon(pokemon.id).subscribe(adjacent => {
@@ -52,8 +52,8 @@ export class PokemonDetailComponent implements OnInit {
     });
   }
 
-  navigateToPokemon(id: number) {
-    this.router.navigate(['/pokemon', id]);
+  navigateToPokemon(pokemon: PokemonBasicData) {
+    this.router.navigate(['/pokemon', pokemon.name.toLowerCase()]);
   }
 
   getStatColor(value: number): string {
@@ -63,5 +63,9 @@ export class PokemonDetailComponent implements OnInit {
     if (value < 120) return '#ADFF2F'; // Green-Yellow
     if (value < 150) return '#00A36C'; // Emerald Green
     return '#20B2AA';                  // Blue-Green
+  }
+
+  backToList() {
+    this.router.navigate(['/']);
   }
 } 

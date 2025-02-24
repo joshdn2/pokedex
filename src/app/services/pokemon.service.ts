@@ -48,12 +48,23 @@ export class PokemonService {
     );
   }
 
+  getPokemonByName(name: string): Observable<PokemonDetailData> {
+    return this.http.get<PokemonApiResponse>(`${this.baseUrl}/pokemon/${name.toLowerCase()}`).pipe(
+      map(details => this.transformDetailedData(details)),
+      catchError(error => {
+        console.error('Error fetching Pokemon details:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
   private transformBasicData(details: PokemonApiResponse): PokemonBasicData {
     return {
       id: details.id,
       name: details.name,
       types: details.types.map(t => t.type.name),
       imageUrl: details.sprites.other['official-artwork'].front_default,
+      pixelSprite: details.sprites.front_default,
       generation: this.getGeneration(details.id)
     };
   }

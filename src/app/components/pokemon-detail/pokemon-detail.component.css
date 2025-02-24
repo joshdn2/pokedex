@@ -33,7 +33,7 @@
 .navigation-controls {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
   gap: 1rem;
 }
 
@@ -48,45 +48,62 @@
 .nav-button {
   display: flex;
   align-items: center;
-  padding: 1rem;
+  gap: 0.5rem;
+  padding: 0.5rem;
   background: white;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   transition: transform 0.2s;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.nav-sprite {
+  width: 40px;
+  height: 40px;
+  /* image-rendering: pixelated; */
+  object-fit: contain;
+}
+
+.nav-info {
+  display: none;
+}
+
+.nav-button.prev::before {
+  content: '←';
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.nav-button.next::after {
+  content: '→';
+  font-size: 1.2rem;
+  color: #666;
 }
 
 .nav-button:hover {
   transform: translateY(-2px);
 }
 
-.nav-button.prev {
-  padding-right: 2rem;
-}
+@media (min-width: 768px) {
+  .nav-sprite {
+    width: 48px;
+    height: 48px;
+  }
 
-.nav-button.next {
-  padding-left: 2rem;
-}
+  .nav-info {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8rem;
+  }
 
-.nav-sprite {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-}
+  .nav-number {
+    color: #666;
+    font-size: 0.7rem;
+  }
 
-.nav-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.nav-number {
-  color: #666;
-  font-size: 0.875rem;
-}
-
-.nav-name {
-  font-weight: 500;
+  .nav-name {
+    font-weight: 500;
+  }
 }
 
 .prev .nav-info {
@@ -95,7 +112,6 @@
 
 .next .nav-info {
   margin-right: 1rem;
-  text-align: right;
 }
 
 .stats-section {
@@ -159,4 +175,40 @@
   text-transform: capitalize;
   font-size: 0.875rem;
   color: white;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #666;
+  transition: color 0.2s;
+}
+
+.back-button:hover {
+  color: #333;
+}
+
+.back-button .material-icons {
+  font-size: 1.5rem;
+}
+
+.pokemon-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin: 1rem 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.pokemon-number {
+  color: #666;
+  font-size: 1.5rem;
 }

@@ -20,7 +20,6 @@ export class PokemonCardComponent {
   constructor(private router: Router) {}
 
   navigateToDetail() {
-    console.log('Navigating to pokemon:', this.pokemon.id);
-    this.router.navigate(['/pokemon', this.pokemon.id]);
+    this.router.navigate(['/pokemon', this.pokemon.name.toLowerCase()]);
   }
 } 
