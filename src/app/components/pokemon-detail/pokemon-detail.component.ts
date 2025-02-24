@@ -68,4 +68,23 @@ export class PokemonDetailComponent implements OnInit {
   backToList() {
     this.router.navigate(['/']);
   }
+
+  getTotalStats(): number {
+    const stats = this.pokemon?.stats;
+    return stats ? 
+      stats.hp + 
+      stats.attack + 
+      stats.defense + 
+      stats.specialAttack + 
+      stats.specialDefense + 
+      stats.speed 
+      : 0;
+  }
+
+  getStatPercentage(value: number): number {
+    // If any stat is over 180, use 255 as the max for all stats
+    const useHighScale = Object.values(this.pokemon!.stats).some(stat => stat > 180);
+    const maxValue = useHighScale ? 255 : 180;
+    return (value / maxValue) * 100;
+  }
 } 
