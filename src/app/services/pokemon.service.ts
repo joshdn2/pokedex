@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, of, forkJoin, throwError } from 'rxjs';
-import { map, tap, switchMap, catchError } from 'rxjs/operators';
-import {
-  PokemonListResponse,
-  PokemonBasicData,
-  PokemonApiResponse
+import { map, catchError, switchMap } from 'rxjs/operators';
+import { 
+  PokemonBasicData, 
+  PokemonDetailData, 
+  PokemonListResponse, 
+  PokemonApiResponse 
 } from './interfaces/pokemon.interfaces';
 
 @Injectable({
@@ -30,17 +31,24 @@ export class PokemonService {
         return forkJoin(detailRequests);
       }),
       map(pokemonDetails => {
-        this.cachedPokemon = pokemonDetails.map(details => this.transformPokemonData(details));
+        this.cachedPokemon = pokemonDetails.map(details => this.transformBasicData(details));
         return this.cachedPokemon;
-      }),
+      })
+    );
+  }
+
+  getPokemonById(id: number): Observable<PokemonDetailData> {
+    // Directly fetch the individual Pokemon's detailed data
+    return this.http.get<PokemonApiResponse>(`${this.baseUrl}/pokemon/${id}`).pipe(
+      map(details => this.transformDetailedData(details)),
       catchError(error => {
-        console.error('Error fetching Pokemon:', error);
+        console.error('Error fetching Pokemon details:', error);
         return throwError(() => error);
       })
     );
   }
 
-  private transformPokemonData(details: PokemonApiResponse): PokemonBasicData {
+  private transformBasicData(details: PokemonApiResponse): PokemonBasicData {
     return {
       id: details.id,
       name: details.name,
@@ -48,6 +56,44 @@ export class PokemonService {
       imageUrl: details.sprites.other['official-artwork'].front_default,
       generation: this.getGeneration(details.id)
     };
+  }
+
+  private transformDetailedData(details: PokemonApiResponse): PokemonDetailData {
+    return {
+      ...this.transformBasicData(details),
+      height: details.height / 10, // Convert to meters
+      weight: details.weight / 10, // Convert to kilograms
+      stats: {
+        hp: details.stats[0].base_stat,
+        attack: details.stats[1].base_stat,
+        defense: details.stats[2].base_stat,
+        specialAttack: details.stats[3].base_stat,
+        specialDefense: details.stats[4].base_stat,
+        speed: details.stats[5].base_stat
+      }
+    };
+  }
+
+  getAdjacentPokemon(id: number): Observable<{ prev: PokemonBasicData | null, next: PokemonBasicData | null }> {
+    const prevId = id > 1 ? id - 1 : null;
+    const nextId = id < 1010 ? id + 1 : null;
+
+    const prevRequest = prevId 
+      ? this.http.get<PokemonApiResponse>(`${this.baseUrl}/pokemon/${prevId}`).pipe(
+          map(details => this.transformBasicData(details))
+        )
+      : of(null);
+
+    const nextRequest = nextId
+      ? this.http.get<PokemonApiResponse>(`${this.baseUrl}/pokemon/${nextId}`).pipe(
+          map(details => this.transformBasicData(details))
+        )
+      : of(null);
+
+    return forkJoin({
+      prev: prevRequest,
+      next: nextRequest
+    });
   }
 
   private getGeneration(id: number): number {
@@ -60,37 +106,5 @@ export class PokemonService {
     if (id <= 809) return 7;
     if (id <= 905) return 8;
     return 9;
-  }
-
-  getPokemonById(id: number): Observable<PokemonBasicData> {
-    // First try to get from cache
-    if (this.cachedPokemon.length > 0) {
-      const pokemon = this.cachedPokemon.find(p => p.id === id);
-      if (pokemon) {
-        return of(pokemon);
-      }
-    }
-
-    // If not in cache, load all Pokemon first
-    return this.getAllPokemon().pipe(
-      map(allPokemon => {
-        const pokemon = allPokemon.find(p => p.id === id);
-        if (!pokemon) {
-          throw new Error(`Pokemon with id ${id} not found`);
-        }
-        return pokemon;
-      })
-    );
-  }
-
-  getAdjacentPokemon(id: number): { prev: PokemonBasicData | null, next: PokemonBasicData | null } {
-    console.log('Getting adjacent Pokemon for ID:', id);
-    console.log('Cached Pokemon count:', this.cachedPokemon.length);
-    
-    const prev = id > 1 ? this.cachedPokemon.find(p => p.id === id - 1) || null : null;
-    const next = id < 1010 ? this.cachedPokemon.find(p => p.id === id + 1) || null : null;
-    
-    console.log('Found prev:', prev?.id, 'next:', next?.id);
-    return { prev, next };
   }
 }

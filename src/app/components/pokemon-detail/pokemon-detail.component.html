@@ -27,13 +27,75 @@
 
     <h1>{{pokemon.name | titlecase}}</h1>
     <img [src]="pokemon.imageUrl" [alt]="pokemon.name" class="pokemon-image">
-    <div class="types">
-      <span *ngFor="let type of pokemon.types" class="type {{type}}">
-        {{type}}
-      </span>
-    </div>
+    <app-pokemon-type [types]="pokemon.types"></app-pokemon-type>
     <div class="info">
       <p>Pokédex Number: #{{pokemon.id.toString().padStart(3, '0')}}</p>
+    </div>
+
+    <div class="stats-section">
+      <h2>Base Stats</h2>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-label">HP</div>
+          <div class="stat-bar">
+            <div class="stat-fill" 
+                 [style.width.%]="(pokemon.stats.hp / 255) * 100"
+                 [style.background-color]="getStatColor(pokemon.stats.hp)">
+              {{pokemon.stats.hp}}
+            </div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Attack</div>
+          <div class="stat-bar">
+            <div class="stat-fill" 
+                 [style.width.%]="(pokemon.stats.attack / 255) * 100"
+                 [style.background-color]="getStatColor(pokemon.stats.attack)">
+              {{pokemon.stats.attack}}
+            </div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Defense</div>
+          <div class="stat-bar">
+            <div class="stat-fill" 
+                 [style.width.%]="(pokemon.stats.defense / 255) * 100"
+                 [style.background-color]="getStatColor(pokemon.stats.defense)">
+              {{pokemon.stats.defense}}
+            </div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Sp. Attack</div>
+          <div class="stat-bar">
+            <div class="stat-fill" 
+                 [style.width.%]="(pokemon.stats.specialAttack / 255) * 100"
+                 [style.background-color]="getStatColor(pokemon.stats.specialAttack)">
+              {{pokemon.stats.specialAttack}}
+            </div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Sp. Defense</div>
+          <div class="stat-bar">
+            <div class="stat-fill" 
+                 [style.width.%]="(pokemon.stats.specialDefense / 255) * 100"
+                 [style.background-color]="getStatColor(pokemon.stats.specialDefense)">
+              {{pokemon.stats.specialDefense}}
+            </div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Speed</div>
+          <div class="stat-bar">
+            <div class="stat-fill" 
+                 [style.width.%]="(pokemon.stats.speed / 255) * 100"
+                 [style.background-color]="getStatColor(pokemon.stats.speed)">
+              {{pokemon.stats.speed}}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div> 

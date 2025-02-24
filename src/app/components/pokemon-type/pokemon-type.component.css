@@ -1,0 +1,30 @@
+.type-container {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 0.5rem;
+}
+
+.type-pill {
+    padding: 0.25rem 1rem;
+    color: white;
+    text-transform: capitalize;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* Single type styling */
+.type-container.single .type-pill {
+    border-radius: 20px;
+    padding: 0.25rem 1.25rem;
+}
+
+/* Dual type styling */
+.type-container.dual .type-pill:first-child {
+    border-radius: 20px 0 0 20px;
+    margin-right: -1px;
+}
+
+.type-container.dual .type-pill:last-child {
+    border-radius: 0 20px 20px 0;
+}

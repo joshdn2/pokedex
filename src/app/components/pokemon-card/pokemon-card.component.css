@@ -56,37 +56,6 @@
   color: #2f2f2f;
 }
 
-.type-container {
-  display: flex;
-  gap: 0;
-  justify-content: center;
-}
-
-.type-pill {
-  padding: 0.25rem 0.75rem;
-  border-radius: 16px;
-  color: white;
-  font-size: 0.9rem;
-  text-transform: capitalize;
-  font-weight: 500;
-}
-
-/* Single type styling */
-.type-container.single .type-pill {
-  border-radius: 16px;
-}
-
-/* Dual type styling */
-.type-container.dual .type-pill:first-child {
-  border-radius: 16px 0 0 16px;
-  padding-right: 0.5rem;
-}
-
-.type-container.dual .type-pill:last-child {
-  border-radius: 0 16px 16px 0;
-  padding-left: 0.5rem;
-}
-
 /* Pokemon Type Colors */
 .normal { background-color: #A8A878; }
 .fire { background-color: #F08030; }
