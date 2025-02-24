@@ -1,0 +1,99 @@
+.pokemon-detail-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.pokemon-detail {
+  text-align: center;
+}
+
+.pokemon-image {
+  max-width: 300px;
+  height: auto;
+}
+
+.types {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+}
+
+.loading-spinner {
+  width: 60px;
+  height: 60px;
+}
+
+.navigation-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.nav-container.left {
+  justify-self: start;
+}
+
+.nav-container.right {
+  justify-self: end;
+}
+
+.nav-button {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.nav-button:hover {
+  transform: translateY(-2px);
+}
+
+.nav-button.prev {
+  padding-right: 2rem;
+}
+
+.nav-button.next {
+  padding-left: 2rem;
+}
+
+.nav-sprite {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.nav-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.nav-number {
+  color: #666;
+  font-size: 0.875rem;
+}
+
+.nav-name {
+  font-weight: 500;
+}
+
+.prev .nav-info {
+  margin-left: 1rem;
+}
+
+.next .nav-info {
+  margin-right: 1rem;
+  text-align: right;
+} 

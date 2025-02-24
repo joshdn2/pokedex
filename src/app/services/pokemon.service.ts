@@ -63,13 +63,34 @@ export class PokemonService {
   }
 
   getPokemonById(id: number): Observable<PokemonBasicData> {
+    // First try to get from cache
     if (this.cachedPokemon.length > 0) {
       const pokemon = this.cachedPokemon.find(p => p.id === id);
-      if (pokemon) return of(pokemon);
+      if (pokemon) {
+        return of(pokemon);
+      }
     }
 
-    return this.http.get<PokemonApiResponse>(`${this.baseUrl}/pokemon/${id}`).pipe(
-      map(details => this.transformPokemonData(details))
+    // If not in cache, load all Pokemon first
+    return this.getAllPokemon().pipe(
+      map(allPokemon => {
+        const pokemon = allPokemon.find(p => p.id === id);
+        if (!pokemon) {
+          throw new Error(`Pokemon with id ${id} not found`);
+        }
+        return pokemon;
+      })
     );
+  }
+
+  getAdjacentPokemon(id: number): { prev: PokemonBasicData | null, next: PokemonBasicData | null } {
+    console.log('Getting adjacent Pokemon for ID:', id);
+    console.log('Cached Pokemon count:', this.cachedPokemon.length);
+    
+    const prev = id > 1 ? this.cachedPokemon.find(p => p.id === id - 1) || null : null;
+    const next = id < 1010 ? this.cachedPokemon.find(p => p.id === id + 1) || null : null;
+    
+    console.log('Found prev:', prev?.id, 'next:', next?.id);
+    return { prev, next };
   }
 }
