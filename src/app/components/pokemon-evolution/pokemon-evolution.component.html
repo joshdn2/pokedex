@@ -23,6 +23,46 @@
 
       <!-- First Evolution Stage -->
       <ng-container *ngIf="getEvolutionsFor(evolutionChain[0].name) as firstEvolutions">
+        <!-- Branching First Evolution -->
+        <div *ngIf="hasBranchingEvolutions(evolutionChain[0].name)" class="branching-evolutions">
+          <div *ngFor="let evolution of firstEvolutions" class="branch">
+            <div class="evolution-arrow diagonal">
+              <span class="arrow">→</span>
+              <div class="evolution-conditions" *ngIf="evolution.evolutionText">
+                {{evolution.evolutionText}}
+              </div>
+            </div>
+            <div class="pokemon-card" [routerLink]="['/pokemon', evolution.name.toLowerCase()]">
+              <img [src]="evolution.imageUrl" [alt]="evolution.name">
+              <div class="pokemon-info">
+                <div class="pokemon-number">#{{evolution.id.toString().padStart(3, '0')}}</div>
+                <div class="pokemon-name">{{evolution.name | titlecase}}</div>
+                <app-pokemon-type [types]="evolution.types"></app-pokemon-type>
+              </div>
+            </div>
+
+            <!-- Further evolutions for branching first stage -->
+            <ng-container *ngIf="getEvolutionsFor(evolution.name) as secondEvolutions">
+              <ng-container *ngIf="secondEvolutions.length > 0">
+                <div class="evolution-arrow">
+                  <span class="arrow">→</span>
+                  <div class="evolution-conditions" *ngIf="secondEvolutions[0].evolutionText">
+                    {{secondEvolutions[0].evolutionText}}
+                  </div>
+                </div>
+                <div class="pokemon-card" [routerLink]="['/pokemon', secondEvolutions[0].name.toLowerCase()]">
+                  <img [src]="secondEvolutions[0].imageUrl" [alt]="secondEvolutions[0].name">
+                  <div class="pokemon-info">
+                    <div class="pokemon-number">#{{secondEvolutions[0].id.toString().padStart(3, '0')}}</div>
+                    <div class="pokemon-name">{{secondEvolutions[0].name | titlecase}}</div>
+                    <app-pokemon-type [types]="secondEvolutions[0].types"></app-pokemon-type>
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+
         <!-- Linear First Evolution -->
         <ng-container *ngIf="!hasBranchingEvolutions(evolutionChain[0].name)">
           <div class="evolution-arrow">
@@ -83,26 +123,6 @@
             </ng-container>
           </ng-container>
         </ng-container>
-
-        <!-- Branching First Evolution -->
-        <div *ngIf="hasBranchingEvolutions(evolutionChain[0].name)" class="branching-evolutions">
-          <div *ngFor="let evolution of firstEvolutions" class="branch">
-            <div class="evolution-arrow diagonal">
-              <span class="arrow">→</span>
-              <div class="evolution-conditions" *ngIf="evolution.evolutionText">
-                {{evolution.evolutionText}}
-              </div>
-            </div>
-            <div class="pokemon-card" [routerLink]="['/pokemon', evolution.name.toLowerCase()]">
-              <img [src]="evolution.imageUrl" [alt]="evolution.name">
-              <div class="pokemon-info">
-                <div class="pokemon-number">#{{evolution.id.toString().padStart(3, '0')}}</div>
-                <div class="pokemon-name">{{evolution.name | titlecase}}</div>
-                <app-pokemon-type [types]="evolution.types"></app-pokemon-type>
-              </div>
-            </div>
-          </div>
-        </div>
       </ng-container>
     </div>
   </div>
