@@ -20,6 +20,9 @@ export interface PokemonDetailData extends PokemonBasicData {
     specialDefense: number;
     speed: number;
   };
+  species: {
+    url: string;
+  };
 }
 
 // API responses
@@ -60,6 +63,9 @@ export interface PokemonApiResponse {
       name: string;
     };
   }[];
+  species: {
+    url: string;
+  };
 }
 
 export interface PokemonGeneration {

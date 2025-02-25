@@ -1,0 +1,182 @@
+/* Base Container Styles */
+.evolution-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  margin-top: 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Evolution Chain Container */
+.evolution-chain {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Evolution Group - Container for each evolution step */
+.evolution-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+/* Branching Evolution Group */
+.evolution-group.branching {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 3rem;
+  align-items: center;
+}
+
+.branching-evolutions {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.branch {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Pokemon Card Styles */
+.pokemon-card {
+  text-align: center;
+  cursor: pointer;
+  padding: 1rem;
+  border-radius: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background: white;
+  min-width: 150px;
+}
+
+.pokemon-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.pokemon-card img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+
+.pokemon-info {
+  margin-top: 0.5rem;
+}
+
+.pokemon-number {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.pokemon-name {
+  font-weight: 500;
+  margin: 0.25rem 0;
+}
+
+/* Evolution Arrow Styles */
+.evolution-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: #666;
+  padding: 0 0.5rem;
+}
+
+.arrow {
+  font-size: 1.5rem;
+}
+
+/* Desktop arrow directions */
+.diagonal .arrow {
+  transform: rotate(-45deg); /* Default up-right arrow */
+}
+
+.branch:last-child .diagonal .arrow {
+  transform: rotate(45deg); /* Down-right arrow for second branch */
+}
+
+.evolution-conditions {
+  font-size: 0.85rem;
+  text-align: center;
+  max-width: 150px;
+  color: #666;
+}
+
+/* Loading and No Evolution States */
+.loading, .no-evolution {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .evolution-group {
+    flex-direction: column;
+  }
+
+  .evolution-group.branching {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .branching-evolutions {
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .branch {
+    flex-direction: column; /* Stack arrow above Pokemon */
+  }
+
+  .branch:first-child .diagonal .arrow {
+    transform: rotate(135deg); /* Down-left for first branch */
+  }
+
+  .branch:last-child .diagonal .arrow {
+    transform: rotate(45deg); /* Down-right for second branch */
+  }
+
+  .evolution-arrow {
+    align-self: center;
+    margin-bottom: 1rem; /* Space between arrow and Pokemon */
+  }
+
+  .evolution-arrow:not(.diagonal) .arrow {
+    transform: rotate(90deg); /* Straight down for linear evolutions */
+  }
+}
+
+/* Ensure content doesn't overflow on very small screens */
+@media (max-width: 480px) {
+  .evolution-section {
+    padding: 1rem;
+  }
+
+  .branching-evolutions {
+    gap: 1rem;
+  }
+
+  .pokemon-card {
+    min-width: 120px;
+  }
+
+  .pokemon-card img {
+    width: 100px;
+    height: 100px;
+  }
+} 

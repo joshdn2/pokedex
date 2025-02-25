@@ -4,13 +4,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PokemonService } from '../../services/pokemon.service';
 import { PokemonBasicData, PokemonDetailData } from '../../services/interfaces/pokemon.interfaces';
 import { PokemonTypeComponent } from '../pokemon-type/pokemon-type.component';
+import { PokemonEvolutionComponent } from '../pokemon-evolution/pokemon-evolution.component';
 
 @Component({
   selector: 'app-pokemon-detail',
   standalone: true,
   imports: [
     CommonModule,
-    PokemonTypeComponent
+    PokemonTypeComponent,
+    PokemonEvolutionComponent
   ],
   templateUrl: './pokemon-detail.component.html',
   styleUrls: ['./pokemon-detail.component.css']
@@ -19,7 +21,9 @@ export class PokemonDetailComponent implements OnInit {
   pokemon: PokemonDetailData | null = null;
   prevPokemon: PokemonBasicData | null = null;
   nextPokemon: PokemonBasicData | null = null;
-  loading = true;
+  loading = false;
+  evolutionLoading = true;
+  evolutionChain: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -36,9 +40,19 @@ export class PokemonDetailComponent implements OnInit {
 
   private loadPokemon(name: string) {
     this.loading = true;
+    this.evolutionLoading = true;
     this.pokemonService.getPokemonByName(name).subscribe({
       next: (pokemon) => {
         this.pokemon = pokemon;
+        this.pokemonService.getEvolutionChain(pokemon.species.url).subscribe({
+          next: chain => {
+            this.evolutionChain = chain;
+            this.evolutionLoading = false;
+          },
+          error: () => {
+            this.evolutionLoading = false;
+          }
+        });
         this.pokemonService.getAdjacentPokemon(pokemon.id).subscribe(adjacent => {
           this.prevPokemon = adjacent.prev;
           this.nextPokemon = adjacent.next;
