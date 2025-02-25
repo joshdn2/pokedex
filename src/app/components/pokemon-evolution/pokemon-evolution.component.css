@@ -92,13 +92,19 @@
   font-size: 1.5rem;
 }
 
-/* Desktop arrow directions */
+/* Default horizontal arrow for branching evolutions */
 .diagonal .arrow {
-  transform: rotate(-45deg); /* Default up-right arrow */
+  transform: rotate(0deg); /* Horizontal arrow by default */
 }
 
+/* First branch gets diagonal up arrow */
+.branch:first-child .diagonal .arrow {
+  transform: rotate(-45deg); /* Up-right arrow */
+}
+
+/* Last branch gets diagonal down arrow */
 .branch:last-child .diagonal .arrow {
-  transform: rotate(45deg); /* Down-right arrow for second branch */
+  transform: rotate(45deg); /* Down-right arrow */
 }
 
 .evolution-conditions {
@@ -158,6 +164,11 @@
 
   .evolution-arrow:not(.diagonal) .arrow {
     transform: rotate(90deg); /* Straight down for linear evolutions */
+  }
+
+  /* All arrows point down on mobile */
+  .diagonal .arrow {
+    transform: rotate(90deg) !important;
   }
 }
 
