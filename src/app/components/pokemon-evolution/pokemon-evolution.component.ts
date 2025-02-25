@@ -65,7 +65,7 @@ export class PokemonEvolutionComponent {
   getEvolutionsFor(pokemonName: string): PokemonEvolution[] {
     return this.evolutionChain.filter(pokemon => 
       pokemon.evolvesFrom === pokemonName
-    );
+    ) || [];
   }
 
   /**
