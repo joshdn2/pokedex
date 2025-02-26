@@ -26,7 +26,6 @@ export class TypeEffectivenessComponent implements OnInit {
   async ngOnInit() {
     if (this.types.length > 0) {
       this.effectiveness = await this.typeEffectivenessService.getTypeEffectiveness(this.types);
-      console.log('Calculated effectiveness:', this.effectiveness);
     }
     this.loading = false;
   }
