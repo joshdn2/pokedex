@@ -43,7 +43,7 @@
     </div>
 
     <div class="stats-container">
-      <div class="stats-section">
+      <div class="card-section">
         <h2>Base Stats</h2>
         <div class="stats-grid">
           <div class="stat-item">
@@ -114,6 +114,7 @@
       </div>
 
       <app-type-effectiveness 
+        class="card-section"
         [types]="getFormattedTypes()" 
         [name]="pokemon.name">
       </app-type-effectiveness>

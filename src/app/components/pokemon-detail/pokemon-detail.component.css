@@ -60,12 +60,7 @@
 .nav-sprite {
   width: 40px;
   height: 40px;
-  /* image-rendering: pixelated; */
   object-fit: contain;
-}
-
-.nav-info {
-  display: none;
 }
 
 .nav-button.prev::before {
@@ -119,17 +114,7 @@
   gap: 1rem;
   flex-wrap: wrap;
 }
-
-.stats-section {
-  background: white;
-  padding: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  flex: 1;
-  min-width: 300px;
-}
-
-app-type-effectiveness {
+.card-section {
   background: white;
   padding: 1rem;
   border-radius: 10px;
