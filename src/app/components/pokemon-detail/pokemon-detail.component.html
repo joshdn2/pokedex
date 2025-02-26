@@ -112,6 +112,8 @@
       </div>
     </div>
 
+    <app-type-effectiveness [types]="getFormattedTypes()" [name]="pokemon.name"></app-type-effectiveness>
+
     <app-pokemon-evolution 
       [pokemonName]="pokemon.name"
       [evolutionChain]="evolutionChain"

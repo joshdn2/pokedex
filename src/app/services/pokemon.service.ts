@@ -147,8 +147,7 @@ export class PokemonService {
           )
         );
         return forkJoin(detailRequests);
-      }),
-      tap(finalChain => console.log('Final evolution chain with details:', finalChain))
+      })
     );
   }
 

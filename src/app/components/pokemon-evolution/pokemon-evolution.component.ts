@@ -24,10 +24,7 @@ export class PokemonEvolutionComponent {
   @Input() pokemonName: string = '';
   @Input() loading: boolean = true;
 
-  ngOnChanges() {
-    console.log('Evolution Chain:', this.pokemonName, this.evolutionChain);
-    console.log('Is Branching:', this.isBranching);
-  }
+  ngOnChanges() {}
 
   get hasEvolutions(): boolean {
     return this.evolutionChain.length > 1;

@@ -1,0 +1,12 @@
+<div class="type-effectiveness">
+  <h3>Type Effectiveness</h3>
+  <p>The effectiveness of each type against {{name | titlecase}}.</p>
+  <div class="type-grid">
+    <div *ngFor="let type of typeOrder" class="type-cell">
+      <span class="type-name {{type}}">{{type}}</span>
+      <span class="effectiveness" *ngIf="effectiveness[type] !== 1" [class]="getEffectivenessClass(effectiveness[type])">
+        {{getEffectivenessLabel(effectiveness[type])}}
+      </span>
+    </div>
+  </div>
+</div>

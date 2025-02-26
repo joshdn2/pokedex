@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PokemonService } from '../../services/pokemon.service';
 import { PokemonBasicData, PokemonDetailData } from '../../services/interfaces/pokemon.interfaces';
 import { PokemonTypeComponent } from '../pokemon-type/pokemon-type.component';
+import { TypeEffectivenessComponent } from '../type-effectiveness/type-effectiveness.component';
 import { PokemonEvolutionComponent } from '../pokemon-evolution/pokemon-evolution.component';
 
 @Component({
@@ -12,7 +13,8 @@ import { PokemonEvolutionComponent } from '../pokemon-evolution/pokemon-evolutio
   imports: [
     CommonModule,
     PokemonTypeComponent,
-    PokemonEvolutionComponent
+    PokemonEvolutionComponent,
+    TypeEffectivenessComponent
   ],
   templateUrl: './pokemon-detail.component.html',
   styleUrls: ['./pokemon-detail.component.css']
@@ -100,5 +102,9 @@ export class PokemonDetailComponent implements OnInit {
     const useHighScale = Object.values(this.pokemon!.stats).some(stat => stat > 180);
     const maxValue = useHighScale ? 255 : 180;
     return (value / maxValue) * 100;
+  }
+
+  getFormattedTypes(): string[] {
+    return this.pokemon?.types.map(t => t.toLowerCase()) || [];
   }
 } 
