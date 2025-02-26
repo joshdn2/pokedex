@@ -1,34 +1,26 @@
-.type-effectiveness {
-  margin: 20px 0;
-}
-
 .type-grid {
   display: grid;
-  grid-template-columns: repeat(9, 1fr);
-  gap: 4px;
-  max-width: 800px;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 5px;
+  max-width: 300px;
   margin: 0 auto;
 }
 
 .type-cell {
-  position: relative;
-  padding: 8px 4px;
-  text-align: center;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 4px;
+  margin-bottom: 3px;
 }
 
 .type-name {
   text-transform: uppercase;
-  font-size: 0.8rem;
-  font-weight: bold;
+  font-size: 0.7rem;
   color: white;
-  padding: 2px 4px;
+  padding: 2px;
   border-radius: 2px;
   width: 100%;
+  margin-bottom: 1px;
 }
 
 /* Use global type colors */
@@ -52,33 +44,14 @@
 .type-name.fairy { background-color: var(--type-fairy); }
 
 .effectiveness {
-  font-weight: bold;
-  padding: 2px 8px;
   border-radius: 2px;
-  min-width: 24px;
-}
-
-.immune {
-  background-color: black;
+  width: 100%;
   color: white;
+  padding: 2px;
 }
-
-.very-resistant {
-  background-color: #800000; /* dark red */
-  color: white;
-}
-
-.resistant {
-  background-color: #cc0000; /* red */
-  color: white;
-}
-
-.weak {
-  background-color: #00cc00; /* green */
-  color: white;
-}
-
-.very-weak {
-  background-color: #008000; /* darker green */
-  color: white;
-}
+.immune {background-color: black;}
+.very-resistant {background-color: #800000;}
+.resistant {background-color: #cc0000;}
+.weak {background-color: #00cc00;}
+.very-weak {background-color: #008000;}
+.neutral {background-color: white;}

@@ -42,77 +42,82 @@
       <p>Pokédex Number: #{{pokemon.id.toString().padStart(3, '0')}}</p>
     </div>
 
-    <div class="stats-section">
-      <h2>Base Stats</h2>
-      <div class="stats-grid">
-        <div class="stat-item">
-          <div class="stat-label">HP</div>
-          <div class="stat-value">{{pokemon.stats.hp}}</div>
-          <div class="stat-bar">
-            <div class="stat-fill" 
-                 [style.width.%]="getStatPercentage(pokemon.stats.hp)"
-                 [style.background-color]="getStatColor(pokemon.stats.hp)">
+    <div class="stats-container">
+      <div class="stats-section">
+        <h2>Base Stats</h2>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-label">HP</div>
+            <div class="stat-value">{{pokemon.stats.hp}}</div>
+            <div class="stat-bar">
+              <div class="stat-fill" 
+                   [style.width.%]="getStatPercentage(pokemon.stats.hp)"
+                   [style.background-color]="getStatColor(pokemon.stats.hp)">
+              </div>
             </div>
           </div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-label">Attack</div>
-          <div class="stat-value">{{pokemon.stats.attack}}</div>
-          <div class="stat-bar">
-            <div class="stat-fill" 
-                 [style.width.%]="getStatPercentage(pokemon.stats.attack)"
-                 [style.background-color]="getStatColor(pokemon.stats.attack)">
+          <div class="stat-item">
+            <div class="stat-label">Attack</div>
+            <div class="stat-value">{{pokemon.stats.attack}}</div>
+            <div class="stat-bar">
+              <div class="stat-fill" 
+                   [style.width.%]="getStatPercentage(pokemon.stats.attack)"
+                   [style.background-color]="getStatColor(pokemon.stats.attack)">
+              </div>
             </div>
           </div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-label">Defense</div>
-          <div class="stat-value">{{pokemon.stats.defense}}</div>
-          <div class="stat-bar">
-            <div class="stat-fill" 
-                 [style.width.%]="getStatPercentage(pokemon.stats.defense)"
-                 [style.background-color]="getStatColor(pokemon.stats.defense)">
+          <div class="stat-item">
+            <div class="stat-label">Defense</div>
+            <div class="stat-value">{{pokemon.stats.defense}}</div>
+            <div class="stat-bar">
+              <div class="stat-fill" 
+                   [style.width.%]="getStatPercentage(pokemon.stats.defense)"
+                   [style.background-color]="getStatColor(pokemon.stats.defense)">
+              </div>
             </div>
           </div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-label">Sp. Atk</div>
-          <div class="stat-value">{{pokemon.stats.specialAttack}}</div>
-          <div class="stat-bar">
-            <div class="stat-fill" 
-                 [style.width.%]="getStatPercentage(pokemon.stats.specialAttack)"
-                 [style.background-color]="getStatColor(pokemon.stats.specialAttack)">
+          <div class="stat-item">
+            <div class="stat-label">Sp. Atk</div>
+            <div class="stat-value">{{pokemon.stats.specialAttack}}</div>
+            <div class="stat-bar">
+              <div class="stat-fill" 
+                   [style.width.%]="getStatPercentage(pokemon.stats.specialAttack)"
+                   [style.background-color]="getStatColor(pokemon.stats.specialAttack)">
+              </div>
             </div>
           </div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-label">Sp. Def</div>
-          <div class="stat-value">{{pokemon.stats.specialDefense}}</div>
-          <div class="stat-bar">
-            <div class="stat-fill" 
-                 [style.width.%]="getStatPercentage(pokemon.stats.specialDefense)"
-                 [style.background-color]="getStatColor(pokemon.stats.specialDefense)">
+          <div class="stat-item">
+            <div class="stat-label">Sp. Def</div>
+            <div class="stat-value">{{pokemon.stats.specialDefense}}</div>
+            <div class="stat-bar">
+              <div class="stat-fill" 
+                   [style.width.%]="getStatPercentage(pokemon.stats.specialDefense)"
+                   [style.background-color]="getStatColor(pokemon.stats.specialDefense)">
+              </div>
             </div>
           </div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-label">Speed</div>
-          <div class="stat-value">{{pokemon.stats.speed}}</div>
-          <div class="stat-bar">
-            <div class="stat-fill" 
-                 [style.width.%]="getStatPercentage(pokemon.stats.speed)"
-                 [style.background-color]="getStatColor(pokemon.stats.speed)">
+          <div class="stat-item">
+            <div class="stat-label">Speed</div>
+            <div class="stat-value">{{pokemon.stats.speed}}</div>
+            <div class="stat-bar">
+              <div class="stat-fill" 
+                   [style.width.%]="getStatPercentage(pokemon.stats.speed)"
+                   [style.background-color]="getStatColor(pokemon.stats.speed)">
+              </div>
             </div>
           </div>
-        </div>
-        <div class="stats-total">
-          <div class="stat-label">Total</div>
-          <div class="stat-value">{{getTotalStats()}}</div>
+          <div class="stats-total">
+            <div class="stat-label">Total</div>
+            <div class="stat-value">{{getTotalStats()}}</div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <app-type-effectiveness [types]="getFormattedTypes()" [name]="pokemon.name"></app-type-effectiveness>
+      <app-type-effectiveness 
+        [types]="getFormattedTypes()" 
+        [name]="pokemon.name">
+      </app-type-effectiveness>
+    </div>
 
     <app-pokemon-evolution 
       [pokemonName]="pokemon.name"

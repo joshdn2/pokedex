@@ -41,6 +41,7 @@ export class TypeEffectivenessComponent implements OnInit {
     if (value === 0.5) return 'resistant';
     if (value === 2) return 'weak';
     if (value === 4) return 'very-weak';
+    if (value === 1) return 'neutral';
     return '';
   }
 }

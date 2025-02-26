@@ -114,15 +114,31 @@
   margin-right: 1rem;
 }
 
+.stats-container {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
 .stats-section {
   background: white;
   padding: 1rem;
   border-radius: 10px;
-  margin-top: 2rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  flex: 1;
+  min-width: 300px;
 }
 
-.stats-section h2 {
+app-type-effectiveness {
+  background: white;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  flex: 1;
+  min-width: 300px;
+}
+
+h2 {
   margin-top: 0;
   margin-bottom: 1.5rem;
   color: #333;
