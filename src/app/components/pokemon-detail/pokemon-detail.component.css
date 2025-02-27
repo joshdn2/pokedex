@@ -242,7 +242,7 @@ h2 {
 }
 
 .pokemon-image-container {
-  flex: 0 1 300px;
+  flex: 0 1 400px;
   margin: 0;
 }
 
@@ -254,5 +254,6 @@ h2 {
 .pokemon-image {
   width: 100%;
   height: auto;
-  max-width: 300px;
+  max-width: 400px;
+  object-fit: contain;
 }

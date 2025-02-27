@@ -20,6 +20,7 @@
           <img [src]="prevPokemon.pixelSprite" [alt]="prevPokemon.name" class="nav-sprite">
           <div class="nav-info">
             <span class="nav-number">#{{prevPokemon.id.toString().padStart(3, '0')}}</span>
+            &nbsp;
             <span class="nav-name">{{prevPokemon.name | titlecase}}</span>
           </div>
         </div>
@@ -28,6 +29,7 @@
         <div *ngIf="nextPokemon" class="nav-button next" (click)="navigateToPokemon(nextPokemon)">
           <div class="nav-info">
             <span class="nav-number">#{{nextPokemon.id.toString().padStart(3, '0')}}</span>
+            &nbsp;
             <span class="nav-name">{{nextPokemon.name | titlecase}}</span>
           </div>
           <img [src]="nextPokemon.pixelSprite" [alt]="nextPokemon.name" class="nav-sprite">
