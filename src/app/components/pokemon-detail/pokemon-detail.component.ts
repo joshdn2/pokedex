@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PokemonService } from '../../services/pokemon.service';
 import { PokemonBasicData, PokemonDetailData } from '../../services/interfaces/pokemon.interfaces';
-import { PokemonTypeComponent } from '../pokemon-type/pokemon-type.component';
 import { TypeEffectivenessComponent } from '../type-effectiveness/type-effectiveness.component';
 import { PokemonEvolutionComponent } from '../pokemon-evolution/pokemon-evolution.component';
 import { PokemonDetailsInfoComponent } from '../pokemon-details-info/pokemon-details-info.component';
@@ -13,7 +12,6 @@ import { PokemonDetailsInfoComponent } from '../pokemon-details-info/pokemon-det
   standalone: true,
   imports: [
     CommonModule,
-    PokemonTypeComponent,
     PokemonEvolutionComponent,
     TypeEffectivenessComponent,
     PokemonDetailsInfoComponent
