@@ -38,6 +38,8 @@ export interface PokemonDetailData extends PokemonBasicData {
     female: number;
   };
   eggGroups: string[];
+  sprites?: PokemonSprites;
+  alternateImages?: PokemonImage[];
 }
 
 // API responses
@@ -61,9 +63,6 @@ export interface PokemonApiResponse {
   }[];
   sprites: {
     front_default: string;
-    front_shiny: string;
-    back_default: string;
-    back_shiny: string;
     other: {
       'official-artwork': {
         front_default: string;
@@ -90,6 +89,81 @@ export interface PokemonApiResponse {
     slot: number;
   }[];
   base_experience: number;
+}
+
+// Detailed sprite data for Pokemon detail page
+export interface PokemonSprites {
+  front_default: string;
+  front_shiny: string;
+  back_default: string;
+  back_shiny: string;
+  other: {
+    'official-artwork': {
+      front_default: string;
+      front_shiny?: string;
+    };
+    home: {
+      front_default: string;
+      front_shiny?: string;
+    };
+    'generation-v': {
+      'black-white': {
+        animated?: {
+          front_default: string;
+          front_shiny: string;
+          back_default: string;
+          back_shiny: string;
+        };
+        front_default: string;
+        front_shiny: string;
+        back_default: string;
+        back_shiny: string;
+      };
+    };
+  };
+  versions: {
+    'generation-i': {
+      'red-blue': {
+        front_default: string;
+        front_gray: string;
+        back_default: string;
+        back_gray: string;
+      };
+      yellow: {
+        front_default: string;
+        front_gray: string;
+        back_default: string;
+        back_gray: string;
+      };
+    };
+    'generation-ii': {
+      crystal: {
+        front_default: string;
+        front_shiny: string;
+        back_default: string;
+        back_shiny: string;
+      };
+      gold: {
+        front_default: string;
+        front_shiny: string;
+        back_default: string;
+        back_shiny: string;
+      };
+      silver: {
+        front_default: string;
+        front_shiny: string;
+        back_default: string;
+        back_shiny: string;
+      };
+    };
+  };
+}
+
+export interface PokemonImage {
+  url: string;
+  label: string;
+  category: 'official-artwork' | 'sprite' | 'generation';
+  isDefault?: boolean;
 }
 
 export interface PokemonGeneration {

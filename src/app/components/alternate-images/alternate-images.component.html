@@ -1,0 +1,13 @@
+<div class="alternate-images">
+  <div class="image-grid">
+    <button 
+      *ngFor="let image of images; trackBy: trackByUrl"
+      class="image-button"
+      [class.selected]="image === selectedImage"
+      (click)="selectImage(image)"
+      [title]="image.label">
+      <img [src]="image.url" [alt]="image.label" class="thumbnail">
+      <span class="image-label">{{image.label}}</span>
+    </button>
+  </div>
+</div>

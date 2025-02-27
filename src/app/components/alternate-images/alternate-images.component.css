@@ -1,0 +1,48 @@
+.alternate-images {
+  margin-top: 1rem;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  gap: 0.5rem;
+  max-width: 400px;
+}
+
+.image-button {
+  padding: 0.25rem;
+  border: 2px solid transparent;
+  background: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.image-button:hover {
+  background-color: #f5f5f5;
+}
+
+.image-button.selected {
+  border-color: #3498db;
+  background-color: #ebf5fb;
+}
+
+.thumbnail {
+  width: 100%;
+  height: 60px;
+  object-fit: contain;
+}
+
+.image-label {
+  font-size: 0.7rem;
+  color: #666;
+  text-align: center;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

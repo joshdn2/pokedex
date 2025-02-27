@@ -239,21 +239,33 @@ h2 {
   gap: 1rem;
   margin: 1rem 0;
   align-items: flex-start;
+  justify-content: center;
 }
 
 .pokemon-image-container {
   flex: 0 1 400px;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pokemon-image {
+  max-width: 300px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
 .details-section {
   flex: 1 1 400px;
-  margin: 0;
+  min-width: 400px;
+  max-width: 600px;
 }
 
-.pokemon-image {
-  width: 100%;
-  height: auto;
-  max-width: 400px;
-  object-fit: contain;
+@media (max-width: 900px) {
+  .details-section {
+    min-width: 100%;
+  }
 }
