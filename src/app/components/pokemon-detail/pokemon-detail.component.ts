@@ -6,6 +6,7 @@ import { PokemonBasicData, PokemonDetailData } from '../../services/interfaces/p
 import { PokemonTypeComponent } from '../pokemon-type/pokemon-type.component';
 import { TypeEffectivenessComponent } from '../type-effectiveness/type-effectiveness.component';
 import { PokemonEvolutionComponent } from '../pokemon-evolution/pokemon-evolution.component';
+import { PokemonDetailsInfoComponent } from '../pokemon-details-info/pokemon-details-info.component';
 
 @Component({
   selector: 'app-pokemon-detail',
@@ -14,7 +15,8 @@ import { PokemonEvolutionComponent } from '../pokemon-evolution/pokemon-evolutio
     CommonModule,
     PokemonTypeComponent,
     PokemonEvolutionComponent,
-    TypeEffectivenessComponent
+    TypeEffectivenessComponent,
+    PokemonDetailsInfoComponent
   ],
   templateUrl: './pokemon-detail.component.html',
   styleUrls: ['./pokemon-detail.component.css']

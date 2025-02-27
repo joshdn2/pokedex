@@ -1,4 +1,4 @@
-<div class="type-container" [class.single]="types.length === 1" [class.dual]="types.length === 2">
+<div class="type-container" [class.center]="center" [class.single]="types.length === 1" [class.dual]="types.length === 2">
   <div *ngFor="let type of types" class="type-pill" [ngClass]="type">
     {{type}}
   </div>

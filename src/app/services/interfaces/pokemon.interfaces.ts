@@ -22,7 +22,22 @@ export interface PokemonDetailData extends PokemonBasicData {
   };
   species: {
     url: string;
+    name: string;  // e.g., "Iron Armor Pokémon"
   };
+  abilities: {
+    name: string;
+    isHidden: boolean;
+    slot: number;
+  }[];
+  baseExp: number;
+  catchRate: number;
+  baseFriendship: number;
+  growthRate: string;
+  genderRatio: {
+    male: number;
+    female: number;
+  };
+  eggGroups: string[];
 }
 
 // API responses
@@ -66,10 +81,47 @@ export interface PokemonApiResponse {
   species: {
     url: string;
   };
+  abilities: {
+    ability: {
+      name: string;
+      url: string;
+    };
+    is_hidden: boolean;
+    slot: number;
+  }[];
+  base_experience: number;
 }
 
 export interface PokemonGeneration {
   number: number;
   name: string;
   pokemon: PokemonBasicData[];
+}
+
+export interface PokemonSpeciesApiResponse {
+  base_happiness: number;
+  capture_rate: number;
+  egg_groups: {
+    name: string;
+    url: string;
+  }[];
+  gender_rate: number; // -1 for genderless, or 0-8 (representing female ratio in eighths)
+  growth_rate: {
+    name: string;
+    url: string;
+  };
+  genera: {
+    genus: string;
+    language: {
+      name: string;
+      url: string;
+    };
+  }[];
+  names: {
+    name: string;
+    language: {
+      name: string;
+      url: string;
+    };
+  }[];
 }

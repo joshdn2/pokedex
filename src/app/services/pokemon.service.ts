@@ -6,7 +6,8 @@ import {
   PokemonBasicData, 
   PokemonDetailData, 
   PokemonListResponse, 
-  PokemonApiResponse 
+  PokemonApiResponse,
+  PokemonSpeciesApiResponse
 } from './interfaces/pokemon.interfaces';
 
 interface EvolutionNode {
@@ -46,9 +47,12 @@ export class PokemonService {
   }
 
   getPokemonById(id: number): Observable<PokemonDetailData> {
-    // Directly fetch the individual Pokemon's detailed data
     return this.http.get<PokemonApiResponse>(`${this.baseUrl}/pokemon/${id}`).pipe(
-      map(details => this.transformDetailedData(details)),
+      switchMap(pokemonData => {
+        return this.http.get<PokemonSpeciesApiResponse>(pokemonData.species.url).pipe(
+          map(speciesData => this.transformDetailedData(pokemonData, speciesData))
+        );
+      }),
       catchError(error => {
         console.error('Error fetching Pokemon details:', error);
         return throwError(() => error);
@@ -58,7 +62,11 @@ export class PokemonService {
 
   getPokemonByName(name: string): Observable<PokemonDetailData> {
     return this.http.get<PokemonApiResponse>(`${this.baseUrl}/pokemon/${name.toLowerCase()}`).pipe(
-      map(details => this.transformDetailedData(details)),
+      switchMap(pokemonData => {
+        return this.http.get<PokemonSpeciesApiResponse>(pokemonData.species.url).pipe(
+          map(speciesData => this.transformDetailedData(pokemonData, speciesData))
+        );
+      }),
       catchError(error => {
         console.error('Error fetching Pokemon details:', error);
         return throwError(() => error);
@@ -77,7 +85,18 @@ export class PokemonService {
     };
   }
 
-  private transformDetailedData(details: PokemonApiResponse): PokemonDetailData {
+  private transformDetailedData(details: PokemonApiResponse, speciesData: PokemonSpeciesApiResponse): PokemonDetailData {
+    // Calculate gender ratio
+    const genderRatio = speciesData.gender_rate === -1 
+      ? { male: 0, female: 0 } // Genderless
+      : {
+          female: (speciesData.gender_rate / 8) * 100,
+          male: ((8 - speciesData.gender_rate) / 8) * 100
+        };
+
+    // Find the English species name
+    const speciesName = speciesData.genera.find(g => g.language.name === 'en')?.genus || '';
+
     return {
       ...this.transformBasicData(details),
       height: details.height / 10, // Convert to meters
@@ -91,8 +110,20 @@ export class PokemonService {
         speed: details.stats[5].base_stat
       },
       species: {
-        url: details.species.url
-      }
+        url: details.species.url,
+        name: speciesName
+      },
+      abilities: details.abilities.map(ability => ({
+        name: ability.ability.name,
+        isHidden: ability.is_hidden,
+        slot: ability.slot
+      })),
+      baseExp: details.base_experience,
+      catchRate: speciesData.capture_rate,
+      baseFriendship: speciesData.base_happiness,
+      growthRate: speciesData.growth_rate.name,
+      genderRatio,
+      eggGroups: speciesData.egg_groups.map(group => group.name)
     };
   }
 

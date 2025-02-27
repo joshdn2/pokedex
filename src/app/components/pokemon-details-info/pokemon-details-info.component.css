@@ -1,0 +1,49 @@
+.details-info {
+  background: white;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.info-table th {
+  text-align: left;
+  padding: 0.25rem 1rem 0.25rem 0;
+  color: #666;
+  font-weight: 500;
+  width: 120px;
+  vertical-align: top;
+}
+
+.info-table td {
+  text-align: left;
+  padding: 0.25rem 0;
+  padding: 0.25rem 0;
+  vertical-align: top;
+}
+
+h3 {
+  margin: 1rem 0 0.5rem;
+  font-size: 1.1rem;
+}
+
+.male {
+  color: #0077cc;
+}
+
+.female {
+  color: #e91e63;
+}
+
+.ability-name {
+  text-transform: capitalize;
+}
+
+.hidden-ability {
+  color: #666;
+  font-size: 0.9rem;
+  margin-left: 0.5rem;
+}

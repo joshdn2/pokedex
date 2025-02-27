@@ -1,1 +1,69 @@
-<p>pokemon-details-info works!</p>
+<div class="details-info">
+    <h2>Pokémon Details</h2>
+  <table class="info-table">
+    <tr>
+      <th>National №</th>
+      <td>#{{pokemon.id.toString().padStart(3, '0')}}</td>
+    </tr>
+    <tr>
+      <th>Type</th>
+      <td><app-pokemon-type [types]="pokemon.types"></app-pokemon-type></td>
+    </tr>
+    <tr>
+      <th>Species</th>
+      <td>{{pokemon.species.name}}</td>
+    </tr>
+    <tr>
+      <th>Height</th>
+      <td>{{formatHeight(pokemon.height)}}</td>
+    </tr>
+    <tr>
+      <th>Weight</th>
+      <td>{{formatWeight(pokemon.weight)}}</td>
+    </tr>
+    <tr>
+      <th>Abilities</th>
+      <td>
+        <div *ngFor="let ability of sortedAbilities">
+          {{ability.slot}}. <span class="ability-name">{{formatAbilityName(ability.name)}}</span>
+          <span *ngIf="ability.isHidden" class="hidden-ability">(hidden ability)</span>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <h3>Training</h3>
+  <table class="info-table">
+    <tr>
+      <th>Base EXP</th>
+      <td>{{pokemon.baseExp}}</td>
+    </tr>
+    <tr>
+      <th>Catch Rate</th>
+      <td>{{pokemon.catchRate}} ({{calculateCatchPercent()}}% with PokéBall, full HP)</td>
+    </tr>
+    <tr>
+      <th>Base Friendship</th>
+      <td>{{pokemon.baseFriendship}}</td>
+    </tr>
+    <tr>
+      <th>Growth Rate</th>
+      <td>{{formatGrowthRate(pokemon.growthRate)}}</td>
+    </tr>
+  </table>
+
+  <h3>Breeding</h3>
+  <table class="info-table">
+    <tr>
+      <th>Egg Groups</th>
+      <td>{{formatEggGroups(pokemon.eggGroups)}}</td>
+    </tr>
+    <tr>
+      <th>Gender</th>
+      <td>
+        <span class="male">{{pokemon.genderRatio.male}}% male</span>,
+        <span class="female">{{pokemon.genderRatio.female}}% female</span>
+      </td>
+    </tr>
+  </table>
+</div>

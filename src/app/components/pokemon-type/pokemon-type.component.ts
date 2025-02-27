@@ -10,4 +10,5 @@ import { CommonModule } from '@angular/common';
 })
 export class PokemonTypeComponent {
   @Input() types: string[] = [];
+  @Input() center: boolean = false;
 }
